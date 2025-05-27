@@ -1,0 +1,105 @@
+DO $$
+DECLARE
+FILENAME VARCHAR(100);
+BEGIN
+    FILENAME := 'V1_3__LOG_TABLES';
+
+    PERFORM CREATE_SEQUENCE_SAFE (
+        'PK_ALH_ID_SEQ',
+        'CREATE SEQUENCE PK_ALH_ID_SEQ
+              START WITH 50
+              INCREMENT BY 50
+              NO MINVALUE
+              NO MAXVALUE
+              NO CYCLE',
+        FILENAME
+    );
+
+    PERFORM CREATE_SEQUENCE_SAFE (
+        'PK_ALV_ID_SEQ',
+        'CREATE SEQUENCE PK_ALV_ID_SEQ
+             START WITH 50
+             INCREMENT BY 50
+             NO MINVALUE
+             NO MAXVALUE
+             NO CYCLE',
+        FILENAME
+    );
+
+    PERFORM CREATE_TABLE_SAFE (
+        'GF_AUDIT_LOG_HEADER',
+        FILENAME,
+        'CREATE TABLE GF_AUDIT_LOG_HEADER (
+             ALH_ID         BIGINT DEFAULT nextval(''PK_ALH_ID_SEQ'') PRIMARY KEY,
+             ALH_CRE_DATE   TIMESTAMP NOT NULL,
+             ALH_TABLE_NAME VARCHAR(50) NOT NULL,
+             ALH_RECORD_PK  BIGINT NOT NULL,
+             ALH_USR_ID     BIGINT NOT NULL
+        )'
+    );
+
+    PERFORM CREATE_FOREIGN_KEY_SAFE (
+        'FK_ALH_USR_ID',
+        'GF_AUDIT_LOG_HEADER',
+        'GF_USERS',
+        'ALH_USR_ID',
+        'USR_ID',
+        FILENAME
+    );
+
+    PERFORM CREATE_TABLE_SAFE (
+        'GF_AUDIT_LOG_VALUES',
+        FILENAME,
+        'CREATE TABLE GF_AUDIT_LOG_VALUES (
+             ALV_ID             BIGINT DEFAULT nextval(''PK_ALV_ID_SEQ'') PRIMARY KEY,
+             ALV_CRE_DATE       TIMESTAMP NOT NULL,
+             ALV_FIELD_NAME     VARCHAR(100) NOT NULL,
+             ALV_ALH_ID         BIGINT NOT NULL,
+             ALV_PREVIOUS_VALUE TEXT,
+             ALV_NEW_VALUE      TEXT
+        )'
+    );
+
+    PERFORM CREATE_FOREIGN_KEY_SAFE (
+        'FK_HEADER_VALUES',
+        'GF_AUDIT_LOG_VALUES',
+        'GF_AUDIT_LOG_HEADER',
+        'ALV_ALH_ID',
+        'ALH_ID',
+        FILENAME
+    );
+
+    PERFORM CREATE_INDEX_SAFE(
+        'IDX_ALH_USR_ID',
+        'CREATE INDEX IDX_ALH_USR_ID ON GF_AUDIT_LOG_HEADER (ALH_USR_ID)',
+        FILENAME
+    );
+
+    PERFORM CREATE_INDEX_SAFE(
+        'IDX_ALH_TABLE_NAME_RECORD_PK',
+        'CREATE INDEX IDX_ALH_TABLE_NAME_RECORD_PK ON GF_AUDIT_LOG_HEADER (ALH_TABLE_NAME, ALH_RECORD_PK)',
+        FILENAME
+    );
+
+    PERFORM CREATE_INDEX_SAFE(
+        'IDX_ALV_ALH_ID',
+        'CREATE INDEX IDX_ALV_ALH_ID ON GF_AUDIT_LOG_VALUES (ALV_ALH_ID)',
+        FILENAME
+    );
+END;
+$$;
+
+COMMENT ON TABLE GF_AUDIT_LOG_HEADER IS 'Change log table';
+COMMENT ON COLUMN GF_AUDIT_LOG_HEADER.ALH_ID IS 'The log ID';
+COMMENT ON COLUMN GF_AUDIT_LOG_HEADER.ALH_CRE_DATE IS 'Date when log was created';
+COMMENT ON COLUMN GF_AUDIT_LOG_HEADER.ALH_TABLE_NAME IS 'Name of edited table';
+COMMENT ON COLUMN GF_AUDIT_LOG_HEADER.ALH_RECORD_PK IS 'Primary key of the edited table';
+COMMENT ON COLUMN GF_AUDIT_LOG_HEADER.ALH_USR_ID IS 'ID of the user who made the change';
+
+COMMENT ON TABLE GF_AUDIT_LOG_VALUES IS 'Table with values before and after the change';
+COMMENT ON COLUMN GF_AUDIT_LOG_VALUES.ALV_ID IS 'ID of the change made';
+COMMENT ON COLUMN GF_AUDIT_LOG_VALUES.ALV_CRE_DATE IS 'Date of the creation of new value';
+COMMENT ON COLUMN GF_AUDIT_LOG_VALUES.ALV_FIELD_NAME IS 'Name of the field which was changed';
+COMMENT ON COLUMN GF_AUDIT_LOG_VALUES.ALV_PREVIOUS_VALUE IS 'Previous value';
+COMMENT ON COLUMN GF_AUDIT_LOG_VALUES.ALV_NEW_VALUE IS 'New value';
+COMMENT ON COLUMN GF_AUDIT_LOG_VALUES.ALV_ALH_ID IS 'ID of the header to find specific changes faster';
