@@ -28,3 +28,9 @@ spring:
 jwt:
   secret: "${environment.jwt.secret:default-secret}"
   expiration: "${environment.jwt.expiration:3600}"
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
