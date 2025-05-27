@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: GelatoFlow
+  config:
+    import: environment.yaml
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 99000
+  jpa:
+    database: POSTGRESQL
+    database-platform:  org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: false
+    locations: classpath:db/migration
+    table: FLYWAY_HISTORY_GELATOFLOW
+    baseline-on-migrate: true
+    validate-on-migrate: false
+    out-of-order: true
+    username: postgres
+    password: 99000
+  logging:
+    config: classpath:log4j2-spring.xml
+jwt:
+  secret: "${environment.jwt.secret:default-secret}"
+  expiration: "${environment.jwt.expiration:3600}"
