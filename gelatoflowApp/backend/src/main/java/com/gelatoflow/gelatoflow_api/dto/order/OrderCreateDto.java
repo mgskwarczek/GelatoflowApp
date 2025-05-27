@@ -1,7 +1,6 @@
 package com.gelatoflow.gelatoflow_api.dto.order;
 
 import com.gelatoflow.gelatoflow_api.entity.OrdersData;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

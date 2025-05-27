@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.gelatoflow.gelatoflow_api.utils.Helpers.throwAndLogError;
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/products")

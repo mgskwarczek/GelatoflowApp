@@ -1,6 +1,5 @@
 package com.gelatoflow.gelatoflow_api.dto.product;
 
-import com.gelatoflow.gelatoflow_api.entity.ProductTypeData;
 import com.gelatoflow.gelatoflow_api.entity.ProductsData;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

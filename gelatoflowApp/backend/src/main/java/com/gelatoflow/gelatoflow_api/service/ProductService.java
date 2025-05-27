@@ -1,7 +1,9 @@
 package com.gelatoflow.gelatoflow_api.service;
 
 import com.gelatoflow.gelatoflow_api.dto.product.ProductWithVariantsDto;
-import com.gelatoflow.gelatoflow_api.entity.*;
+import com.gelatoflow.gelatoflow_api.entity.ProductTypeData;
+import com.gelatoflow.gelatoflow_api.entity.ProductVariantData;
+import com.gelatoflow.gelatoflow_api.entity.ProductsData;
 import com.gelatoflow.gelatoflow_api.exception.ApplicationException;
 import com.gelatoflow.gelatoflow_api.exception.ErrorCode;
 import com.gelatoflow.gelatoflow_api.repository.ProductRepository;

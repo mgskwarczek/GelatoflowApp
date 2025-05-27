@@ -3,7 +3,6 @@ package com.gelatoflow.gelatoflow_api.repository;
 import com.gelatoflow.gelatoflow_api.entity.ICShopData;
 import com.gelatoflow.gelatoflow_api.entity.UserData;
 import com.gelatoflow.gelatoflow_api.entity.UsersShopsData;
-import com.gelatoflow.gelatoflow_api.service.UserService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

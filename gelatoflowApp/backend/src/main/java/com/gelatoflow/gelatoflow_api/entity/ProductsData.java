@@ -1,14 +1,11 @@
 package com.gelatoflow.gelatoflow_api.entity;
 
-import com.gelatoflow.gelatoflow_api.dto.auditLogValues.LogValueDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Entity

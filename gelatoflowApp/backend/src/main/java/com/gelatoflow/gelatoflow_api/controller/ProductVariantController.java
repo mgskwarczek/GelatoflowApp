@@ -5,12 +5,9 @@ import com.gelatoflow.gelatoflow_api.service.ProductVariantService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.gelatoflow.gelatoflow_api.utils.Helpers.throwAndLogError;
 
 @RestController
 @RequestMapping("/product-variant")
