@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import static com.gelatoflow.gelatoflow_api.utils.Helpers.throwAndLogError;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
